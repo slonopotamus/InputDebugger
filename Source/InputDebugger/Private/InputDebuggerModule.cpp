@@ -68,19 +68,17 @@ FInputDebuggerModule& FInputDebuggerModule::GetModule()
 
 void FInputDebuggerModule::RegisterListener(const FKey& Key, const TScriptInterface<UDebugKeyListener>& Listener)
 {
-	Listeners.FindOrAdd(Key).Add(Listener);
+	if (auto& KeyListeners = Listeners.FindOrAdd(Key); !ensure(KeyListeners.Contains(Listener)))
+	{
+		KeyListeners.AddUnique(Listener);
+	}
 }
 
 void FInputDebuggerModule::UnregisterListener(const FKey& Key, const TScriptInterface<UDebugKeyListener>& Listener)
 {
-	if (auto* ListenersPtr = Listeners.Find(Key))
+	if (auto* ListenersPtr = Listeners.Find(Key); ensure(ListenersPtr) && ensure(ListenersPtr->Remove(Listener)) && ListenersPtr->IsEmpty())
 	{
-		ListenersPtr->Remove(Listener);
-
-		if (ListenersPtr->IsEmpty())
-		{
-			Listeners.Remove(Key);
-		}
+		Listeners.Remove(Key);
 	}
 }
 

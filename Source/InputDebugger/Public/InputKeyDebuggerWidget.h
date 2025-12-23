@@ -12,21 +12,24 @@ class INPUTDEBUGGER_API UInputKeyDebuggerWidget : public UBorder, public IDebugK
 	virtual TSharedRef<SWidget> RebuildWidget() override;
 
 	virtual void ReleaseSlateResources(bool bReleaseChildren) override;
-	
+
 	virtual void OnKeyUp_Implementation(const FKey& InKey) override;
-	
+
 	virtual void OnKeyDown_Implementation(const FKey& InKey) override;
-	
+
 	UFUNCTION()
 	FSlateBrush GetBrush();
 
 	bool bRegistered = false;
-	
-	bool bKeyPressed = false;
+
+	bool bKeyDown = false;
 
 	UPROPERTY(EditAnywhere)
 	FKey Key;
-	
+
 	UPROPERTY(EditAnywhere, Category = "Appearance")
-	FSlateBrush KeyPressedBrush;
+	FSlateBrush KeyUpBrush;
+
+	UPROPERTY(EditAnywhere, Category = "Appearance")
+	FSlateBrush KeyDownBrush;
 };

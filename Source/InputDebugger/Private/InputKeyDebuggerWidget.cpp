@@ -5,6 +5,7 @@ TSharedRef<SWidget> UInputKeyDebuggerWidget::RebuildWidget()
 	if (!bRegistered)
 	{
 		FInputDebuggerModule::GetModule().RegisterListener(Key, this);
+		bRegistered = true;
 	}
 
 	BackgroundDelegate.BindDynamic(this, &ThisClass::GetBrush);
@@ -25,15 +26,15 @@ void UInputKeyDebuggerWidget::ReleaseSlateResources(const bool bReleaseChildren)
 
 void UInputKeyDebuggerWidget::OnKeyUp_Implementation(const FKey& InKey)
 {
-	bKeyPressed = false;
+	bKeyDown = false;
 }
 
 void UInputKeyDebuggerWidget::OnKeyDown_Implementation(const FKey& InKey)
 {
-	bKeyPressed = true;
+	bKeyDown = true;
 }
 
 FSlateBrush UInputKeyDebuggerWidget::GetBrush()
 {
-	return bKeyPressed ? KeyPressedBrush : Background;
+	return bKeyDown ? KeyDownBrush : KeyUpBrush;
 }
