@@ -1,0 +1,19 @@
+﻿{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "InputDebugger",
+	"Description": "",
+	"Category": "Other",
+	"CreatedBy": "Marat Radchenko",
+	"CreatedByURL": "https://github.com/slonopotamus",
+	"DocsURL": "https://github.com/slonopotamus/InputDebugger",
+	"CanContainContent": true,
+	"Modules": [
+		{
+			"Name": "InputDebugger",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

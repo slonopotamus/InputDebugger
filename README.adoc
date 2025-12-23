@@ -1,0 +1,11 @@
+= Input Debugger
+:icons: font
+
+ifdef::env-github[]
+:caution-caption: :fire:
+:important-caption: :exclamation:
+endif::[]
+
+Unreal Engine plugin that displays debug widget with pressed buttons.
+
+Unreal Engine 5.0+ is supported.
