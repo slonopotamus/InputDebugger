@@ -1,5 +1,11 @@
 #include "InputDebugger/Public/InputKeyDebuggerWidget.h"
 
+UInputKeyDebuggerWidget::UInputKeyDebuggerWidget()
+{
+	KeyUpBrush.TintColor = FLinearColor::Black;
+	KeyDownBrush.TintColor = FLinearColor::Red;
+}
+
 TSharedRef<SWidget> UInputKeyDebuggerWidget::RebuildWidget()
 {
 	if (!bRegistered)

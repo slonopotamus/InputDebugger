@@ -68,7 +68,7 @@ FInputDebuggerModule& FInputDebuggerModule::GetModule()
 
 void FInputDebuggerModule::RegisterListener(const FKey& Key, const TScriptInterface<UDebugKeyListener>& Listener)
 {
-	if (auto& KeyListeners = Listeners.FindOrAdd(Key); !ensure(KeyListeners.Contains(Listener)))
+	if (auto& KeyListeners = Listeners.FindOrAdd(Key); ensure(!KeyListeners.Contains(Listener)))
 	{
 		KeyListeners.AddUnique(Listener);
 	}

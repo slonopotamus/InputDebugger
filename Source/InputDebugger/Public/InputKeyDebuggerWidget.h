@@ -8,6 +8,8 @@ UCLASS()
 class INPUTDEBUGGER_API UInputKeyDebuggerWidget : public UBorder, public IDebugKeyListener
 {
 	GENERATED_BODY()
+	
+	UInputKeyDebuggerWidget();
 
 	virtual TSharedRef<SWidget> RebuildWidget() override;
 
