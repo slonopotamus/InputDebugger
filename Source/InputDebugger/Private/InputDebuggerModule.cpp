@@ -13,7 +13,7 @@ struct FInputDebuggerInputProcessor final : IInputProcessor
 
 	virtual bool HandleKeyUpEvent(FSlateApplication& SlateApp, const FKeyEvent& InKeyEvent) override
 	{
-		if (auto* ListenersPtr = InputDebugger.Listeners.Find(InKeyEvent.GetKey()))
+		if (auto* ListenersPtr = InputDebugger.KeyListeners.Find(InKeyEvent.GetKey()))
 		{
 			for (auto& Listener : *ListenersPtr)
 			{
@@ -26,11 +26,24 @@ struct FInputDebuggerInputProcessor final : IInputProcessor
 
 	virtual bool HandleKeyDownEvent(FSlateApplication& SlateApp, const FKeyEvent& InKeyEvent) override
 	{
-		if (auto* ListenersPtr = InputDebugger.Listeners.Find(InKeyEvent.GetKey()))
+		if (auto* ListenersPtr = InputDebugger.KeyListeners.Find(InKeyEvent.GetKey()))
 		{
 			for (auto& Listener : *ListenersPtr)
 			{
 				IDebugKeyListener::Execute_OnKeyDown(Listener.GetObject(), InKeyEvent.GetKey());
+			}
+		}
+
+		return false;
+	}
+
+	virtual bool HandleAnalogInputEvent(FSlateApplication& SlateApp, const FAnalogInputEvent& InAnalogInputEvent) override
+	{
+		if (auto* ListenersPtr = InputDebugger.AxisListeners.Find(InAnalogInputEvent.GetKey()))
+		{
+			for (auto& Listener : *ListenersPtr)
+			{
+				IDebugAxisListener::Execute_OnAxisValue(Listener.GetObject(), InAnalogInputEvent.GetKey(), InAnalogInputEvent.GetAnalogValue());
 			}
 		}
 
@@ -66,19 +79,35 @@ FInputDebuggerModule& FInputDebuggerModule::GetModule()
 	return FModuleManager::LoadModuleChecked<FInputDebuggerModule>(ModuleName);
 }
 
-void FInputDebuggerModule::RegisterListener(const FKey& Key, const TScriptInterface<UDebugKeyListener>& Listener)
+void FInputDebuggerModule::RegisterKeyListener(const FKey& Key, const TScriptInterface<UDebugKeyListener>& Listener)
 {
-	if (auto& KeyListeners = Listeners.FindOrAdd(Key); ensure(!KeyListeners.Contains(Listener)))
+	if (auto& Arr = KeyListeners.FindOrAdd(Key); ensure(!Arr.Contains(Listener)))
 	{
-		KeyListeners.AddUnique(Listener);
+		Arr.AddUnique(Listener);
 	}
 }
 
-void FInputDebuggerModule::UnregisterListener(const FKey& Key, const TScriptInterface<UDebugKeyListener>& Listener)
+void FInputDebuggerModule::UnregisterKeyListener(const FKey& Key, const TScriptInterface<UDebugKeyListener>& Listener)
 {
-	if (auto* ListenersPtr = Listeners.Find(Key); ensure(ListenersPtr) && ensure(ListenersPtr->Remove(Listener)) && ListenersPtr->IsEmpty())
+	if (auto* ListenersPtr = KeyListeners.Find(Key); ensure(ListenersPtr) && ensure(ListenersPtr->Remove(Listener)) && ListenersPtr->IsEmpty())
 	{
-		Listeners.Remove(Key);
+		KeyListeners.Remove(Key);
+	}
+}
+
+void FInputDebuggerModule::RegisterAxisListener(const FKey& Key, const TScriptInterface<UDebugAxisListener>& Listener)
+{
+	if (auto& Arr = AxisListeners.FindOrAdd(Key); ensure(!Arr.Contains(Listener)))
+	{
+		Arr.AddUnique(Listener);
+	}
+}
+
+void FInputDebuggerModule::UnregisterAxisListener(const FKey& Key, const TScriptInterface<UDebugAxisListener>& Listener)
+{
+	if (auto* ListenersPtr = AxisListeners.Find(Key); ensure(ListenersPtr) && ensure(ListenersPtr->Remove(Listener)) && ListenersPtr->IsEmpty())
+	{
+		KeyListeners.Remove(Key);
 	}
 }
 

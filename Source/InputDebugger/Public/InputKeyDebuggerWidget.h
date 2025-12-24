@@ -8,7 +8,7 @@ UCLASS()
 class INPUTDEBUGGER_API UInputKeyDebuggerWidget : public UBorder, public IDebugKeyListener
 {
 	GENERATED_BODY()
-	
+
 	UInputKeyDebuggerWidget();
 
 	virtual TSharedRef<SWidget> RebuildWidget() override;
@@ -20,7 +20,7 @@ class INPUTDEBUGGER_API UInputKeyDebuggerWidget : public UBorder, public IDebugK
 	virtual void OnKeyDown_Implementation(const FKey& InKey) override;
 
 	UFUNCTION()
-	FSlateBrush GetBrush();
+	FLinearColor GetBrushColor();
 
 	bool bRegistered = false;
 
@@ -30,8 +30,8 @@ class INPUTDEBUGGER_API UInputKeyDebuggerWidget : public UBorder, public IDebugK
 	FKey Key;
 
 	UPROPERTY(EditAnywhere, Category = "Appearance")
-	FSlateBrush KeyUpBrush;
+	FLinearColor KeyUpBrushColor;
 
 	UPROPERTY(EditAnywhere, Category = "Appearance")
-	FSlateBrush KeyDownBrush;
+	FLinearColor KeyDownBrushColor;
 };

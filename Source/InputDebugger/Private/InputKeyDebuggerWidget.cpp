@@ -2,19 +2,19 @@
 
 UInputKeyDebuggerWidget::UInputKeyDebuggerWidget()
 {
-	KeyUpBrush.TintColor = FLinearColor::Black;
-	KeyDownBrush.TintColor = FLinearColor::Red;
+	KeyUpBrushColor = FLinearColor::Black;
+	KeyDownBrushColor = FLinearColor::Red;
 }
 
 TSharedRef<SWidget> UInputKeyDebuggerWidget::RebuildWidget()
 {
 	if (!bRegistered)
 	{
-		FInputDebuggerModule::GetModule().RegisterListener(Key, this);
+		FInputDebuggerModule::GetModule().RegisterKeyListener(Key, this);
 		bRegistered = true;
 	}
 
-	BackgroundDelegate.BindDynamic(this, &ThisClass::GetBrush);
+	BrushColorDelegate.BindDynamic(this, &ThisClass::GetBrushColor);
 
 	return Super::RebuildWidget();
 }
@@ -25,7 +25,7 @@ void UInputKeyDebuggerWidget::ReleaseSlateResources(const bool bReleaseChildren)
 
 	if (bRegistered)
 	{
-		FInputDebuggerModule::GetModule().UnregisterListener(Key, this);
+		FInputDebuggerModule::GetModule().UnregisterKeyListener(Key, this);
 		bRegistered = false;
 	}
 }
@@ -40,7 +40,7 @@ void UInputKeyDebuggerWidget::OnKeyDown_Implementation(const FKey& InKey)
 	bKeyDown = true;
 }
 
-FSlateBrush UInputKeyDebuggerWidget::GetBrush()
+FLinearColor UInputKeyDebuggerWidget::GetBrushColor()
 {
-	return bKeyDown ? KeyDownBrush : KeyUpBrush;
+	return bKeyDown ? KeyDownBrushColor : KeyUpBrushColor;
 }
