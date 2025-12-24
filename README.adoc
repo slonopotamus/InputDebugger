@@ -6,7 +6,7 @@ ifdef::env-github[]
 :important-caption: :exclamation:
 endif::[]
 
-Unreal Engine plugin that displays debug widget with pressed buttons.
+Unreal Engine plugin that displays debug widget with pressed buttons (only gamepads for now).
 
 Unreal Engine 5.2+ is supported.
 
