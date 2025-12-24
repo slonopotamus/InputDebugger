@@ -8,6 +8,6 @@ endif::[]
 
 Unreal Engine plugin that displays debug widget with pressed buttons.
 
-Unreal Engine 5.1+ is supported.
+Unreal Engine 5.2+ is supported.
 
 This project aims to provide a free alternative to https://www.fab.com/ru/listings/306cfc61-1f46-4b73-811d-90a0004c5496[Input Debugger Ultimate] plugin.
