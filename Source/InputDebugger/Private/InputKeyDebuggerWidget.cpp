@@ -1,4 +1,4 @@
-#include "InputDebugger/Public/InputKeyDebuggerWidget.h"
+#include "InputKeyDebuggerWidget.h"
 
 UInputKeyDebuggerWidget::UInputKeyDebuggerWidget()
 {
