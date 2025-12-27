@@ -8,7 +8,7 @@ TSharedRef<SWidget> UInputAxisDebuggerWidget::RebuildWidget()
 		FInputDebuggerModule::GetModule().RegisterAxisListener(Axis, this);
 		bRegistered = true;
 	}
-	
+
 	MoveChildren(0.5f);
 
 	return Super::RebuildWidget();
@@ -29,7 +29,6 @@ void UInputAxisDebuggerWidget::OnAxisValue_Implementation(const FKey& Key, const
 {
 	MoveChildren(Value);
 }
-
 
 void UInputAxisDebuggerWidget::MoveChildren(const float Value)
 {
