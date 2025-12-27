@@ -2,8 +2,7 @@
 
 UInputKeyDebuggerWidget::UInputKeyDebuggerWidget()
 {
-	KeyUpBrushColor = FLinearColor::Black;
-	KeyDownBrushColor = FLinearColor::Red;
+	SetVisibilityInternal(ESlateVisibility::Collapsed);
 }
 
 TSharedRef<SWidget> UInputKeyDebuggerWidget::RebuildWidget()
@@ -13,8 +12,6 @@ TSharedRef<SWidget> UInputKeyDebuggerWidget::RebuildWidget()
 		FInputDebuggerModule::GetModule().RegisterKeyListener(Key, this);
 		bRegistered = true;
 	}
-
-	BrushColorDelegate.BindDynamic(this, &ThisClass::GetBrushColor);
 
 	return Super::RebuildWidget();
 }
@@ -32,15 +29,10 @@ void UInputKeyDebuggerWidget::ReleaseSlateResources(const bool bReleaseChildren)
 
 void UInputKeyDebuggerWidget::OnKeyUp_Implementation(const FKey& InKey)
 {
-	bKeyDown = false;
+	SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UInputKeyDebuggerWidget::OnKeyDown_Implementation(const FKey& InKey)
 {
-	bKeyDown = true;
-}
-
-FLinearColor UInputKeyDebuggerWidget::GetBrushColor()
-{
-	return bKeyDown ? KeyDownBrushColor : KeyUpBrushColor;
+	SetVisibility(ESlateVisibility::Visible);
 }

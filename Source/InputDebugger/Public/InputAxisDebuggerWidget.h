@@ -22,4 +22,6 @@ class INPUTDEBUGGER_API UInputAxisDebuggerWidget : public UOverlay, public IDebu
 
 	UPROPERTY(EditAnywhere)
 	FKey Axis;
+	
+	void MoveChildren(const float Value);
 };

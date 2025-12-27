@@ -19,19 +19,8 @@ class INPUTDEBUGGER_API UInputKeyDebuggerWidget : public UBorder, public IDebugK
 
 	virtual void OnKeyDown_Implementation(const FKey& InKey) override;
 
-	UFUNCTION()
-	FLinearColor GetBrushColor();
-
 	bool bRegistered = false;
-
-	bool bKeyDown = false;
 
 	UPROPERTY(EditAnywhere)
 	FKey Key;
-
-	UPROPERTY(EditAnywhere, Category = "Appearance")
-	FLinearColor KeyUpBrushColor;
-
-	UPROPERTY(EditAnywhere, Category = "Appearance")
-	FLinearColor KeyDownBrushColor;
 };

@@ -8,6 +8,8 @@ TSharedRef<SWidget> UInputAxisDebuggerWidget::RebuildWidget()
 		FInputDebuggerModule::GetModule().RegisterAxisListener(Axis, this);
 		bRegistered = true;
 	}
+	
+	MoveChildren(0.5f);
 
 	return Super::RebuildWidget();
 }
@@ -25,7 +27,12 @@ void UInputAxisDebuggerWidget::ReleaseSlateResources(const bool bReleaseChildren
 
 void UInputAxisDebuggerWidget::OnAxisValue_Implementation(const FKey& Key, const float Value)
 {
+	MoveChildren(Value);
+}
 
+
+void UInputAxisDebuggerWidget::MoveChildren(const float Value)
+{
 	for (auto* MySlot : GetSlots())
 	{
 		if (auto* ChildSlot = Cast<UOverlaySlot>(MySlot); ensure(MySlot))
