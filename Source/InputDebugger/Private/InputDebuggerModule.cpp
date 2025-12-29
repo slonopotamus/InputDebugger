@@ -107,7 +107,7 @@ void FInputDebuggerModule::UnregisterAxisListener(const FKey& Key, const TScript
 {
 	if (auto* ListenersPtr = AxisListeners.Find(Key); ensure(ListenersPtr) && ensure(ListenersPtr->Remove(Listener)) && ListenersPtr->IsEmpty())
 	{
-		KeyListeners.Remove(Key);
+		AxisListeners.Remove(Key);
 	}
 }
 
