@@ -79,7 +79,7 @@ FInputDebuggerModule& FInputDebuggerModule::GetModule()
 	return FModuleManager::LoadModuleChecked<FInputDebuggerModule>(ModuleName);
 }
 
-void FInputDebuggerModule::RegisterKeyListener(const FKey& Key, const TScriptInterface<UDebugKeyListener>& Listener)
+void FInputDebuggerModule::RegisterKeyListener(const FKey& Key, const TScriptInterface<IDebugKeyListener>& Listener)
 {
 	if (auto& Arr = KeyListeners.FindOrAdd(Key); ensure(!Arr.Contains(Listener)))
 	{
@@ -87,7 +87,7 @@ void FInputDebuggerModule::RegisterKeyListener(const FKey& Key, const TScriptInt
 	}
 }
 
-void FInputDebuggerModule::UnregisterKeyListener(const FKey& Key, const TScriptInterface<UDebugKeyListener>& Listener)
+void FInputDebuggerModule::UnregisterKeyListener(const FKey& Key, const TScriptInterface<IDebugKeyListener>& Listener)
 {
 	if (auto* ListenersPtr = KeyListeners.Find(Key); ensure(ListenersPtr) && ensure(ListenersPtr->Remove(Listener)) && ListenersPtr->IsEmpty())
 	{
@@ -95,7 +95,7 @@ void FInputDebuggerModule::UnregisterKeyListener(const FKey& Key, const TScriptI
 	}
 }
 
-void FInputDebuggerModule::RegisterAxisListener(const FKey& Key, const TScriptInterface<UDebugAxisListener>& Listener)
+void FInputDebuggerModule::RegisterAxisListener(const FKey& Key, const TScriptInterface<IDebugAxisListener>& Listener)
 {
 	if (auto& Arr = AxisListeners.FindOrAdd(Key); ensure(!Arr.Contains(Listener)))
 	{
@@ -103,7 +103,7 @@ void FInputDebuggerModule::RegisterAxisListener(const FKey& Key, const TScriptIn
 	}
 }
 
-void FInputDebuggerModule::UnregisterAxisListener(const FKey& Key, const TScriptInterface<UDebugAxisListener>& Listener)
+void FInputDebuggerModule::UnregisterAxisListener(const FKey& Key, const TScriptInterface<IDebugAxisListener>& Listener)
 {
 	if (auto* ListenersPtr = AxisListeners.Find(Key); ensure(ListenersPtr) && ensure(ListenersPtr->Remove(Listener)) && ListenersPtr->IsEmpty())
 	{

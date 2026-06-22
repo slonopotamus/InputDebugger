@@ -50,18 +50,18 @@ class INPUTDEBUGGER_API FInputDebuggerModule final : public FDefaultModuleImpl
 
 	virtual void ShutdownModule() override;
 
-	TMap<FKey, TArray<TScriptInterface<UDebugKeyListener>>> KeyListeners;
+	TMap<FKey, TArray<TScriptInterface<IDebugKeyListener>>> KeyListeners;
 
-	TMap<FKey, TArray<TScriptInterface<UDebugAxisListener>>> AxisListeners;
+	TMap<FKey, TArray<TScriptInterface<IDebugAxisListener>>> AxisListeners;
 
 public:
 	static FInputDebuggerModule& GetModule();
 
-	void RegisterKeyListener(const FKey& Key, const TScriptInterface<UDebugKeyListener>& Listener);
+	void RegisterKeyListener(const FKey& Key, const TScriptInterface<IDebugKeyListener>& Listener);
 
-	void UnregisterKeyListener(const FKey& Key, const TScriptInterface<UDebugKeyListener>& Listener);
+	void UnregisterKeyListener(const FKey& Key, const TScriptInterface<IDebugKeyListener>& Listener);
 
-	void RegisterAxisListener(const FKey& Key, const TScriptInterface<UDebugAxisListener>& Listener);
+	void RegisterAxisListener(const FKey& Key, const TScriptInterface<IDebugAxisListener>& Listener);
 
-	void UnregisterAxisListener(const FKey& Key, const TScriptInterface<UDebugAxisListener>& Listener);
+	void UnregisterAxisListener(const FKey& Key, const TScriptInterface<IDebugAxisListener>& Listener);
 };
